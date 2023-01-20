@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<select id="Login"  parameterType="model.vo.memberVO" resultType="model.vo.memberVO">
+		SELECT date_format(curdate, '%Y년 %m월 %d일') AS curdate,nickname,email,grade FROM member WHERE id= #{id} and pwd = #{pwd}
+	</select>
+	<insert id="Register"  parameterType="model.vo.memberVO">
+		INSERT INTO member(id,pwd,nickname,name,curdate,gender,email,grade) VALUES(#{id},#{pwd},#{nickname},#{name},now(),#{gender},#{email},1)
+	</insert>
+	<delete id="Delete"  parameterType="string" >
+		delete a,b from member a left JOIN comm b on a.nickname = b.nickname  where a.nickname = #{nickname}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

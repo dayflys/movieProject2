@@ -88,6 +88,7 @@
 <%
 	String title = request.getParameter("title");
 //	ArrayList<MovieVO> movielist = (ArrayList<MovieVO>)session.getAttribute("movielist");
+	MovieVO movielist = new MovieVO();
 %>		
 		<% request.setCharacterEncoding("utf-8"); %>	
 	<div class="container mt-3 " style="max-width:85vw; height:5vh;margin-bottom: 15px;">
@@ -98,7 +99,7 @@
 		<div class="container-fluid d-flex flex-row"  style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
 			<c:forEach var="i" begin="0" end="9" >
 		
-				<form action="select" method="get" style=" color: #869fd9;">
+				<form action="/detail" method="get" style=" color: #869fd9;">
 
 					<input type="image" class="mt-3 mx-3 img" src="${movielist.get(i).getImgUrl()}" style=" max-width: 20vw;height:60vh" >
 

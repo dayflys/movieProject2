@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.vo.memberVO,model.vo.MovieVO, java.util.List, java.util.ArrayList" %>
+<%@ page import="model.vo.memberVO, java.util.List, java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -69,8 +69,8 @@
 	<div class="pt-3 color " style=" background: linear-gradient(black, #0f1b29 90%);">
 	<% request.setCharacterEncoding("utf-8"); %>	
 			<div class="container-fluid text-center mt-3" >
-				<a href="http://localhost:8088/reprotype/log">
-			  	 <img src="/logo.png" style="width: 30vw; height: 15vh">
+				<a href="http://localhost:8080/login">
+			  	 <img src="/resources/logo.png" style="width: 30vw; height: 15vh">
 			   </a>
 <!-- 				<h1 class="main-title " style="margin: 0;"></h1> -->
 			</div>
@@ -88,16 +88,16 @@
 			    <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 			      <div class="container">
 							<%
-								memberVO member = (memberVO)session.getAttribute("mem");
+								memberVO member = (memberVO)session.getAttribute("user");
 								boolean loginox = false;
 								if(member != null){
 									loginox = true;
 								}
 							%>
 			      	<% if(!loginox){%>
-			        <form method="post" action="login">
+			        <form method="post" action="/member/login">
 			        <div class="d-flex justify-content-center mt-3" id="loginBoxTitle">
-			         <img src="./logo-black.png" style="width: 10vw; height: 8vh">
+			         <img src="/resources/logo-black.png" style="width: 10vw; height: 8vh">
 			        </div>
 			      	<div class="form-floating mt-3">
 					 <input type="text" class="form-control" name="id" id="id">
@@ -109,8 +109,8 @@
 					</div>
 
 					<button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">로그인</button>
-					<a href="http://localhost:8088/reprotype/sign-up.jsp"><button class="w-100 btn btn-lg btn-secondary mt-3" type="button">회원가입</button></a>
-			      	</form>
+					</form>
+					  <form action="/register" method="get"><button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">회원가입</button></form>
 			      	<%} else{%>
 			      		<div class="subindex_purplebox mt-3">
 						<div class="profile_area">
@@ -122,8 +122,7 @@
 								</div>
 							</div>
 						</div>
-			      		<form method="get" action="login">
-			      			<input type="hidden" name="action" value="logout">
+			      		<form method="get" action="/member/logout">
 			      			<button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">로그아웃</button>
 			      		</form>
 			      		<button class="w-100 btn btn-lg btn-secondary mt-3" onclick="deleted('<%= member.getNickname() %>')">회원 탈퇴</button>
@@ -150,15 +149,16 @@ function deleted(nick) {
 		xhr.onload = function () {
 			if(xhr.status == 200) {				
 				let jsondom = JSON.parse(xhr.responseText);
-				if (jsondom.result == true){
+				console.log(jsondom)
+				if (jsondom.result === true){
 					window.alert("회원탈퇴가 완료되었습니다.");
-					window.location.reload();
+					location.href='http://localhost:8080/login';
 				}
 				else
 					window.alert("회원탈퇴에 실패했습니다.");
 			}
 		};
-		xhr.open("GET", "/reprotype/mem_del?"+query, true);
+		xhr.open("GET", "/member/delete?"+query, true);
 		xhr.send();
 		
 	}else{
