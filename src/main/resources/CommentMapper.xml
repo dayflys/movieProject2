@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="resource.CommentMapper">
+    <select id="selectComment" resultType="com.example.movieedu.model.vo.CommentVO">
+        SELECT * FROM COMM WHERE moviename = #{movieNm}
+    </select>
+
+    <insert id="insertComment"  parameterType="com.example.movieedu.model.vo.CommentVO">
+        <selectKey resultType="int" keyProperty="cnt" order="BEFORE">
+            select comm_seq.nextval from dual
+        </selectKey>
+        INSERT INTO comm(nickname,preHour,cont,movieName,like_no,cnt) values (#{nickname}, #{prehour}, #{content}, #{moviename}, 0, #{cnt})
+    </insert>
+
+    <update id="updateComment" parameterType="com.example.movieedu.model.vo.CommentVO">
+        update comm set cont = #{content}, preHour = #{prehour} where cnt = #{cnt}
+    </update>
+
+    <update id="like" parameterType="com.example.movieedu.model.vo.CommentVO"><![CDATA[
+        update comm set like_no = #{like} where cnt = #{cnt}
+    ]]></update>
+
+    <delete id = "deleteComment" parameterType="_int">
+        delete from comm where cnt = #{cnt}
+    </delete>
+
+
+
+</mapper>
