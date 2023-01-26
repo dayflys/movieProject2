@@ -2,28 +2,36 @@ package com.example.movieedu;
 
 import api.API;
 import model.vo.MovieVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import service.DailyBox;
+import service.WeeklyBox;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 
 @Controller
 public class JspController {
 
+    @Autowired
+    DailyBox dailyBox;
+
+    @Autowired
+    WeeklyBox weeklyBox;
+
     @GetMapping("/")
-    public String first(){
+    public String callAPI(HttpSession s) throws InterruptedException {
 
-        //시간을 만들어야됌 전날 날짜, 그 주 월요일 날짜 두 개
-        // time 2개
+        ArrayList<MovieVO> daily = new ArrayList<>();
+        daily.addAll(dailyBox.getDailyBox(s));
+        Thread.sleep(1000);
+        ArrayList<MovieVO> weekly = new ArrayList<>();
+        weekly.addAll(weeklyBox.getWeeklyBox(s));
 
-//        RankingAPI(time1); // 일별 박스오피스 영화 이름 리스트 꺼내야 됌
-//        RankingWeekAPI(time2); // 주간 박스오피스 영화 이름 리스트 꺼내야 됌 <- 시간
-        // json 형식으로 parsing 형식을 고쳐줘야 한다.
-        // 자바 json 파싱
-        // Map<String, int|String> 2개
-        //for(String name: Map.keyset()){
-//        API.get(이름들);
-        // MovieVO안에 넣고 setter
-        // MovieVO를 session 안에 넣고
+        s.setAttribute("daily", daily);
+        s.setAttribute("weekly", weekly);
 
         return "login";
     }

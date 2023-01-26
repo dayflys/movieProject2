@@ -78,10 +78,6 @@
 </head>
 <body>
 <div class="p-2 mt-3" >
-<%
-	String title = request.getParameter("title");
-	ArrayList<MovieVO> movielist = (ArrayList<MovieVO>)session.getAttribute("movielist");
-%>
 		<% request.setCharacterEncoding("utf-8"); %>
 
 	<div class="container mb-lg-5">
@@ -106,20 +102,24 @@
 				<input type="hidden" name="subject" value="다양성 장르 영화">
 				<button class="btn btn-lg btn-dark" type="submit" >다양성 장르 영화</button>
 			</form>
+			<form action="/movie/delete" method="get">
+				<button class="btn btn-lg btn-dark" type="submit" ><img src="/resources/trash3.svg"/></button>
+			</form>
 			</div>
 		</div>
 
 <c:if test="${!empty subject}">
 	<div class="container mb-3 mt-3" style="max-width:85vw; height:5vh;margin-bottom: 15px;">
-		<h1 class = "subtitle " > 일별 ${subject}</h1>
+		<h1 class = "subtitle " > 일별 ${subject[0]}</h1>
 	</div>
-		<div class ="container-fluid mb-5" >
+		<div class ="container" >
 			<div class="container-fluid d-flex flex-row" style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
 				<c:forEach var="i" begin="0" end="9" >
-					<form action="/detail" method="get" style=" color: #869fd9;">
-						<input type="image" class="mt-3 mx-3 img" src="${select[i].getImgUrl()}" style=" max-width: 20vw;height:60vh" >
+					<form action="/comment/select" method="get" style=" color: #869fd9;">
+						<input type="image" class="mt-3 mx-3 img" id="movieImg" src="${select[i].getImgUrl()}" style=" max-width: 20vw;height:60vh" >
 						<input type="hidden" name="id" value="${i}" >
-						<input type="hidden" name="movie" value="${select[i].getMovieNM()}" >
+						<input type="hidden" name="curMovie" value="select" >
+						<input type="hidden" name="moviename" value="${select[i].getMovieNM()}" >
 						<br>
 						<c:if test="${select[i].getRank() eq 1}">
 							<h1 class = "mt-3 text-center toprank">&nbsp;TOP ${select[i].getRank() }</h1>
@@ -150,66 +150,63 @@
 		<div class="container-fluid d-flex flex-row"  style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
 			<c:forEach var="i" begin="0" end="9" >
 		
-				<form action="/detail" method="get" style=" color: #869fd9;">
+				<form action="/comment/select" method="get" style=" color: #869fd9;">
 
-					<input type="image" class="mt-3 mx-3 img" id="movieImg" src="${movielist.get(i).getImgUrl().replaceAll("mit110","mit500")}" style=" max-width: 20vw;height:60vh" >
+					<input type="image" class="mt-3 mx-3 img" id="movieImg" src="${daily[i].getImgUrl().replaceAll("mit110","mit500")}" style=" max-width: 20vw;height:60vh" >
 
 					<input type="hidden" name="id" value="${i}" >
-					<input type="hidden" name="movie" value="${movielist.get(i).getMovieNM()}" >
+					<input type="hidden" name="curMovie" value="daily" >
+					<input type="hidden" name="moviename" value="${daily[i].getMovieNM()}" >
 					<br>
-					<c:if test="${movielist.get(i).getRank() eq 1}">
-					<h1 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h1>
+					<c:if test="${daily[i].getRank() eq 1}">
+					<h1 class = "mt-3 text-center toprank">&nbsp;TOP ${daily[i].getRank() }</h1>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() eq 2}">
-					<h2 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h2>
+					<c:if test="${daily[i].getRank() eq 2}">
+					<h2 class = "mt-3 text-center toprank">&nbsp;TOP ${daily[i].getRank() }</h2>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() eq 3}">
-					<h3 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h3>
+					<c:if test="${daily[i].getRank() eq 3}">
+					<h3 class = "mt-3 text-center toprank">&nbsp;TOP ${daily[i].getRank() }</h3>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() > 3}">
-					<h4 class = "mt-3 text-center lowrank">&nbsp;TOP ${movielist.get(i).getRank() }</h4>
+					<c:if test="${daily[i].getRank() > 3}">
+					<h4 class = "mt-3 text-center lowrank">&nbsp;TOP ${daily[i].getRank() }</h4>
 					</c:if>
 
-					<h5 class = "text-center mb-3 movietitle">&nbsp;${movielist.get(i).getMovieNM() }</h5>
+					<h5 class = "text-center mb-3 movietitle">&nbsp;${daily[i].getMovieNM() }</h5>
 				</form>
 			
 			</c:forEach>
 			
 		</div>
 	</div>
-	
-</div>
-<!-- <hr style="border:0; height:3px; background: #ccc;"> -->
+
 
 	<div class="container mt-3" style="max-width:85vw; height:5vh;">
 		<h1 class = "subtitleyellow"> 주간 박스 오피스 랭킹</h1>
 	</div>
-	<!-- style = "background-color:#265ff0;   border-radius:30px; box-shadow : 1px 3px 10px 0px #FAC919""gradyellow -->
 	<div class ="container " >
 		<div class="container-fluid d-flex flex-row"  id="scroll" style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
-			<c:forEach var="i" begin="10" end="19" >
-		
-				<form action="select" method="get" style=" color: #869fd9;">
-					<h1>${movielist.get(i).getImgUrl()}</h1>
-					<input type="image" class="mt-3 mx-3 img" src="${movielist.get(i).getImgUrl()}" style=" max-width: 20vw;height:60vh" >
+			<c:forEach var="i" begin="0" end="9" >
+				<form action="/comment/select" method="get" style=" color: #869fd9;">
+					<input type="image" class="mt-3 mx-3 img" src="${weekly[i].getImgUrl().replaceAll("mit110","mit500")}" style=" max-width: 20vw;height:60vh" >
 					
 					<input type="hidden" name="id" value="${i}" >
-					<input type="hidden" name="movie" value="${movielist.get(i).getMovieNM()}" >
+					<input type="hidden" name="curMovie" value="weekly" >
+					<input type="hidden" name="moviename" value="${weekly[i].getMovieNM()}" >
 					<br>
-					<c:if test="${movielist.get(i).getRank() eq 1}">
-					<h1 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h1>
+					<c:if test="${weekly[i].getRank() eq 1}">
+					<h1 class = "mt-3 text-center toprank">&nbsp;TOP ${weekly[i].getRank() }</h1>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() eq 2}">
-					<h2 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h2>
+					<c:if test="${weekly[i].getRank() eq 2}">
+					<h2 class = "mt-3 text-center toprank">&nbsp;TOP ${weekly[i].getRank() }</h2>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() eq 3}">
-					<h3 class = "mt-3 text-center toprank">&nbsp;TOP ${movielist.get(i).getRank() }</h3>
+					<c:if test="${weekly[i].getRank() eq 3}">
+					<h3 class = "mt-3 text-center toprank">&nbsp;TOP ${weekly[i].getRank() }</h3>
 					</c:if>
-					<c:if test="${movielist.get(i).getRank() > 3}">
-					<h4 class = "mt-3 text-center lowrank">&nbsp;TOP ${movielist.get(i).getRank() }</h4>
+					<c:if test="${weekly[i].getRank() > 3}">
+					<h4 class = "mt-3 text-center lowrank">&nbsp;TOP ${weekly[i].getRank() }</h4>
 					</c:if>
 					
-					<h5 class = "text-center mb-3 movietitle">&nbsp;${movielist.get(i).getMovieNM() }</h5>
+					<h5 class = "text-center mb-3 movietitle">&nbsp;${weekly[i].getMovieNM() }</h5>
 				</form>
 			
 			</c:forEach>

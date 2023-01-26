@@ -16,15 +16,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes(value = {"select","subject"})
 public class MovieController {
     @Autowired
     MovieService ms;
 
+    @ModelAttribute("select")
+    public static ArrayList<MovieVO> create(){
+        return new ArrayList<>();
+    }
+
+    @ModelAttribute("subject")
+    public static ArrayList<String> subcreate(){
+        return new ArrayList<>();
+    }
+
     @GetMapping("/movie/country")
-    public ModelAndView country(String subject,int num){
-        List<MovieVO> countries = ms.country("test",num);
-        ModelAndView mav = new ModelAndView();
-        ArrayList<MovieVO> results = new ArrayList<>();
+    public String country(@ModelAttribute("select") ArrayList<MovieVO> results,@ModelAttribute("subject")ArrayList<String> sub,String subject,int num) {
+        List<MovieVO> countries = ms.country("test", num);
+        if(results.size() != 0) {
+            results.clear();
+        }
+        if(sub.size() != 0 ){
+            sub.clear();
+        }
         for (int i = 0; i < 10; i++) {
             MovieVO vo = new MovieVO();
             String result = API.get(countries.get(i).getMovieNM());
@@ -40,17 +55,22 @@ public class MovieController {
             vo.setUserRating(Double.parseDouble(item.getString("userRating")));
             results.add(vo);
         }
-        mav.addObject("select",results);
-        mav.addObject("subject",subject);
-        mav.setViewName("login");
-        return mav;
+
+        sub.add(subject);
+
+
+        return "login";
     }
 
     @GetMapping("/movie/ganre")
-    public ModelAndView ganre(String subject,int num) {
+    public String ganre(@ModelAttribute("select") ArrayList<MovieVO> results,@ModelAttribute("subject")ArrayList<String> sub,String subject,int num) {
         List<MovieVO> ganres = ms.ganre("test", num);
-        ModelAndView mav = new ModelAndView();
-        ArrayList<MovieVO> results = new ArrayList<>();
+        if(results.size() != 0) {
+            results.clear();
+        }
+        if(sub.size() != 0 ){
+            sub.clear();
+        }
         for (int i = 0; i < 10; i++) {
             MovieVO vo = new MovieVO();
             String result = API.get(ganres.get(i).getMovieNM());
@@ -66,28 +86,15 @@ public class MovieController {
             vo.setUserRating(Double.parseDouble(item.getString("userRating")));
             results.add(vo);
         }
-        mav.addObject("select",results);
-        mav.addObject("subject",subject);
-        mav.setViewName("login");
-        return mav;
+        sub.add(subject);
+
+        return "login";
     }
 
-//    public static void 만들기(List<MovieVO> list,ArrayList<MovieVO> results){
-//        for (int i = 0; i < 10; i++) {
-//            MovieVO vo = new MovieVO();
-//            String result = API.get(list.get(i).getMovieNM());
-//            System.out.println(result);
-//            JSONObject object = new JSONObject(result);
-//            JSONArray items = object.getJSONArray("items");
-//            JSONObject item = (JSONObject) items.get(0);
-//            vo.setSubtitle(item.getString("subtitle"));
-//            vo.setRank(list.get(i).getRank());
-//            vo.setMovieNM(list.get(i).getMovieNM());
-//            vo.setActor(item.getString("actor"));
-//            vo.setImgUrl(item.getString("image").replaceAll("mit110", "mit500"));
-//            vo.setPubDate(Integer.parseInt(item.getString("pubDate")));
-//            vo.setUserRating(Double.parseDouble(item.getString("userRating")));
-//            results.add(vo);
-//        }
-//    }
+    @GetMapping("/movie/delete")
+    public String delete(@ModelAttribute("select") ArrayList<MovieVO> results,@ModelAttribute("subject")ArrayList<String> sub) {
+        results.clear();
+        sub.clear();
+        return "login";
+    }
 }
