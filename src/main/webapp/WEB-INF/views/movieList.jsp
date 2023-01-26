@@ -111,7 +111,7 @@
 
 <c:if test="${!empty subject}">
 	<div class="container mb-3 mt-3" style="max-width:85vw; height:5vh;margin-bottom: 15px;">
-		<h1 class = "subtitle " > ${subject}</h1>
+		<h1 class = "subtitle " > 일별 ${subject}</h1>
 	</div>
 		<div class ="container-fluid mb-5" >
 			<div class="container-fluid d-flex flex-row" style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
