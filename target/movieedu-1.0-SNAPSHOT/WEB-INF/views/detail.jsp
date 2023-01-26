@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="today" class="java.util.Date" scope="page" />
+<jsp:useBean id="now" class="java.util.Date"/>
 
 
 <!DOCTYPE html>
@@ -40,6 +40,10 @@
 		font-weghit: bold;
 		text-shadow: 2px 2px 2px gray; 
 	}
+	.com_date{
+		font-size : 2px;
+		color : gray;
+	}
 </style>
 </head>
 <script>
@@ -55,6 +59,13 @@
 			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">"${sessionScope.movielist[movieId].movieNM}"</h1>
 			<hr style="color:black;">
 			<img class="mt-3 img " src="${sessionScope.movielist[movieId].imgUrl.replaceAll("mit110", "mit500")}"style="width:400px;height:600px;">
+			<form action = "/dib/insert" method = "post">
+				<button class="btn text-white col-2" type="submit" id="save" style="float:right;
+				border:0.1px solid black;background-color:#0c3869;" <c:if test="${sessionScope.user == null}"> disabled </c:if>>영화 찜하기</button>
+				<input type="hidden" name="moviename" value="${sessionScope.movielist[movieId].movieNM}">
+				<input type="hidden" name="imgurl" value="${sessionScope.movielist[movieId].imgUrl}">
+				<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
+			</form>
 
 			<hr style="color:black;">
 			<p><span class = "content">부제 :</span> "${sessionScope.movielist[movieId].subtitle}"  </p>
@@ -62,13 +73,17 @@
 			<p><span class = "content">관객 평점:</span> "${sessionScope.movielist[movieId].userRating}" 점</p>
 			<p><span class = "content">개봉 년도 :</span> "${sessionScope.movielist[movieId].pubDate}" </p>
 			<p><span class = "content">영화 감독 :</span> "${sessionScope.movielist[movieId].director}" </p>
-			<p><span class = "content">영화 배우 :</span> "${sessionScope.movielist[movieId].actor}" </p>
+			<p><span class = "content">영화 배우 :</span> "${sessionScope.movielist[movieId].actor}"</p>
+
+
+
+
 			<hr style="color:black;">
 			<form action = "/comment/insert" method = "post">
 				<div class="input-group mb-3 mx-auto floating-right row">
 					<input type="hidden" name="moviename" value="${sessionScope.movielist[movieId].movieNM}">
 					<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
-					<input type="hidden" name="prehour" value="<fmt:formatDate value="${today}" pattern="yyyy-MM-dd"/>" >
+					<input type="hidden" name="prehour" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>" >
 					<input type="hidden" name="id" value="${movieId}">
 					<%--<input type="hidden" name="id" value="<%= id%>">--%>
 					<c:if test="${sessionScope.user != null}">
@@ -82,8 +97,9 @@
 				</div>
 			</form>
 			<hr style="color:black;">
-			<table class="table " style = "font-weight :bold ;">
-				<thead>
+			<table class="table table-striped table-sm table caption-top" style = "font-weight :bold ;">
+				<caption>Comment</caption>
+				<thead class = "table-dark">
 					<tr>
 						<th class="col-2">닉네임</th><th class="col-4">댓글 내용</th>
 						<th class="col-2">좋아요</th><th class="col-1">수정</th><th class="col-1">삭제</th>
@@ -92,7 +108,8 @@
 				<tbody>
 				<c:forEach var="vo" items = "${list}"  begin="0" end="${list.size()}" >
 					<tr>
-						<td class="col-2">${vo.nickname}</td>
+						<td class="col-2">${vo.nickname}
+						<p class = "com_date">${vo.prehour}</p></td>
 						<td class="col-4">${vo.content}</td>
 						<td class="col-2">
 						
@@ -169,7 +186,7 @@
 
 					<!-- 히든 인풋 -->
 					<input type="hidden" id="edit-comment-id" value = "${movieId}">
-					<input type="hidden" id="edit-comment-prehour" value = "<fmt:formatDate value="${today}" pattern="yyyy-MM-dd"/>">
+					<input type="hidden" id="edit-comment-prehour" value = "<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm"/>">
 					<input type="hidden" id="edit-comment-cnt" value = "1">
 					<input type="hidden" id="edit-comment-movie" value = "${sessionScope.movielist[movieId].movieNM}">
 

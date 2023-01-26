@@ -75,7 +75,6 @@ public class loginServlet extends HttpServlet {
 
 				// 무비 네임 기반 검색..... (썸네일 및 정보 가져오기)
 				String naverRes = NaverAPI.getUrl(movieNm);
-
 				// Naver API JSON parsing
 				JSONObject jobj1 = new JSONObject(naverRes);
 				JSONArray items = jobj1.getJSONArray("items");
@@ -107,7 +106,6 @@ public class loginServlet extends HttpServlet {
 				session.setAttribute("movie", new MovieVO());
 				MovieVO movieVO = (MovieVO)session.getAttribute("movie");
 				movieNm = brarray.getJSONObject((i-dBOL.length())).getString("movieNm");
-
 				// 무비 네임 기반 검색..... (썸네일 및 정보 가져오기)
 				String naverRes = NaverAPI.getUrl(movieNm);
 

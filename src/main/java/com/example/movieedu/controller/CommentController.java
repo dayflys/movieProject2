@@ -7,13 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
     @Autowired
-    CommentDAO dao;
+    private CommentDAO dao;
     @GetMapping("/select")
     public ModelAndView list(String moviename, String id) {
         System.out.println("comment/select 접속 성공");
@@ -33,7 +35,7 @@ public class CommentController {
         return mav;
     }
     @PostMapping("/insert")
-    public ModelAndView insert(CommentVO vo, String id){
+    public ModelAndView insert(CommentVO vo, String id) throws UnsupportedEncodingException {
         System.out.println("comment/insert 접속 성공");
         boolean result = dao.insertM(vo);
         ModelAndView mav = new ModelAndView();
@@ -43,7 +45,8 @@ public class CommentController {
             mav.addObject("msg", "글 작성 중 오류 발생");
         }
         mav.addObject("movieId", id);
-        mav.setViewName("detail");
+
+        mav.setViewName("redirect:/comment/select?x=22&y=104&moviename="+URLEncoder.encode(vo.getMoviename(),"UTF-8")+"&id="+id);
 
         return mav;
     }
@@ -67,7 +70,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete")
-    public ModelAndView delete(CommentVO vo, String id){
+    public ModelAndView delete(CommentVO vo, String id) throws UnsupportedEncodingException {
         System.out.println("comment/delete 접속 성공");
         boolean result = dao.deleteM(vo.getCnt());
         ModelAndView mav = new ModelAndView();
@@ -77,12 +80,12 @@ public class CommentController {
             mav.addObject("msg", "삭제 중 오류 발생");
         }
         mav.addObject("movieId", id);
-        mav.setViewName("detail");
+        mav.setViewName("redirect:/comment/select?x=22&y=104&moviename="+URLEncoder.encode(vo.getMoviename(),"UTF-8")+"&id="+id);
         return mav;
     }
 
     @PostMapping("/like")
-    public ModelAndView like(CommentVO vo, String id) {
+    public ModelAndView like(CommentVO vo, String id) throws UnsupportedEncodingException {
         System.out.println("comment/like 접속 성공");
 
         System.out.println("Comment vo" + vo.getLike());
@@ -95,7 +98,7 @@ public class CommentController {
             mav.addObject("msg", "좋아요 수정 중 오류 발생");
         }
         mav.addObject("movieId", id);
-        mav.setViewName("detail");
+        mav.setViewName("redirect:/comment/select?x=22&y=104&moviename="+URLEncoder.encode(vo.getMoviename(),"UTF-8")+"&id="+id);
         return mav;
 
     }

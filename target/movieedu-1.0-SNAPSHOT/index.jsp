@@ -4,6 +4,9 @@
 <head>
     <title>JSP - Hello World</title>
 </head>
+<%
+    response.sendRedirect("http://localhost:8088/log");
+    %>
 <body>
 <h1><%= "Hello World!!!!!!!!!" %>
 </h1>
@@ -11,6 +14,6 @@
 <script>
     console.log("안녕")
 </script>
-<a href="http://localhost:8088/log">영화 사이트 접속</a>
+<%--<a href="http://localhost:8088/log">영화 사이트 접속</a>--%>
 </body>
 </html>

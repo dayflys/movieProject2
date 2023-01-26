@@ -35,8 +35,7 @@ public class NaverAPI {
         String responseBody = get(apiURL,requestHeaders);
 
 
-//        System.out.println(responseBody);
-        
+
         return responseBody;
     }
 
