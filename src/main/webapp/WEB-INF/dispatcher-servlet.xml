@@ -29,6 +29,7 @@ http://www.springframework.org/schema/mvc ">
     <context:component-scan base-package="api"/>
     <context:component-scan base-package="model.dao"/>
     <context:component-scan base-package="model.vo"/>
+    <context:component-scan base-package="service" />
 
     <beans:bean id="multipartResolver"
                 class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />

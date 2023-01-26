@@ -31,8 +31,6 @@ public class JsonReader {
         try {
             URL url = new URL(myURL);
             urlConn = url.openConnection();
-            if (urlConn != null)
-                urlConn.setReadTimeout(60 * 1000);
             if (urlConn != null && urlConn.getInputStream() != null) {
                 in = new InputStreamReader(urlConn.getInputStream(), Charset.defaultCharset());
                 //charset 문자 집합의 인코딩을 사용해 urlConn.getInputStream을 문자스트림으로 변환 객체를 생성.
