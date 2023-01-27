@@ -73,4 +73,9 @@ public class MemberController {
         s.removeAttribute("user");
         return "login";
     }
+
+    @GetMapping("/member/info")
+    public String MemberInfo(){
+        return "info2";
+    }
 }

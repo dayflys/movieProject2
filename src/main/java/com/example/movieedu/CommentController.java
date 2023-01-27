@@ -20,17 +20,19 @@ public class CommentController {
     private CommentDAO dao;
 
     @GetMapping("/select")
-    public ModelAndView list(String moviename, String id, String curMovie, HttpSession s) {
+    public ModelAndView list(String moviename, String id, String curMovie,String msg, HttpSession s) {
         System.out.println("comment/select 접속 성공");
         List<CommentVO> list = dao.searchM(moviename);
         ModelAndView mav = new ModelAndView();
         if (list.size() != 0){
             mav.addObject("list", list);
         }
-        else{
-            mav.addObject("msg", "해당 영화의 댓글 없음");
+        if(msg != null){
+            mav.addObject("msg", msg);
         }
         s.setAttribute("movieList",s.getAttribute(curMovie));
+        System.out.println(curMovie);
+        System.out.println(s.getAttribute(curMovie));
         s.setAttribute("curMovie",curMovie);
         mav.addObject("movieId", id);
         mav.setViewName("detail");
@@ -61,7 +63,7 @@ public class CommentController {
         return mav;
     }
 
-    @PostMapping(value = "/update", produces = "application/json; charset=utf-8")
+    @PostMapping(value = "/update", consumes = "application/json")
     @ResponseBody
     public ModelAndView update(@RequestBody CommentVO vo, String id) {
         System.out.println("comment/update 접속 성공");

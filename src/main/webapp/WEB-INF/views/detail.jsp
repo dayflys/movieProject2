@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%--<link rel="stylesheet" href="/resources/static/myCss.css" />--%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 <style>	
 	.icon-white{
@@ -47,23 +46,26 @@
 </style>
 </head>
 <body   class="bg color " style=" width: 100vw; height: 100vh;">
-<script>
-	console.log("${sessionScope.curMovie}")
-</script>
 	<jsp:include page="header.jsp"></jsp:include>
-
+<c:if test="${ !empty msg }" >
+	<script>
+		alert('${ msg }');
+	</script>
+</c:if>
 		<div class="container bg-white mx-auto mt-3" style="width:80vw; height:auto; color:black; border-radius:30px; padding-bottom:15px;">
 			<br>
-			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">${sessionScope.get("movieList")[movieId].getMovieNM()}</h1>
+			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">${sessionScope.movieList[movieId].getMovieNM()}</h1>
 			<hr style="color:black;">
 			<img class="mt-3 img " src="${sessionScope.get("movieList")[movieId].getImgUrl().replaceAll("mit110", "mit500")}"style="width:400px;height:600px;">
 			<form action = "/dib/insert" method = "post">
 				<button class="btn text-white col-2" type="submit" id="save" style="float:right;
 				border:0.1px solid black;background-color:#0c3869;" <c:if test="${sessionScope.user == null}"> disabled </c:if>>영화 찜하기</button>
 				<input type="hidden" name="moviename" value="${sessionScope.get("movieList")[movieId].getMovieNM()}">
-				<input type="hidden" name="imgurl" value="${sessionScope.get("movieList")[movieId].getImgUrl()}">
+				<input type="hidden" name="imgUrl" value="${sessionScope.get("movieList")[movieId].getImgUrl().replaceAll("mit110", "mit500")}">
 				<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
+				<input type="hidden" name="dibtime" value = "<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm"/>">
 				<input type="hidden" name="curMovie" value="${sessionScope.curMovie}" >
+				<input type="hidden" name="id" value="${movieId}">
 			</form>
 
 			<hr style="color:black;">
@@ -244,18 +246,18 @@ const commentUpdateBtn = document.querySelector("#comment-update-btn");
 	
 	    // 수정 REST API 호출 - fetch()
 	    fetch("/comment/update", {
-	        method: "POST",          
+	        method: "POST",
 	        headers: {
 	            'Content-Type': 'application/json',
 	          },
 	        body: JSON.stringify(comment), // 수정된 댓글 객체를 JSON 으로 전달
-	    }).then(response => {
+	    }).then((response) => {
 	        // http 응답 코드에 따른 메세지 출력
 	            const msg = (response.ok) ? "댓글 수정이 완료 되었습니다." : "댓글 수정 실패...!";
 	            window.alert(msg);
 	        // 현재 페이지를 새로 고침
 	        window.location.reload();
-	    }).catch((err) => console.log(err));
+	    }).catch((err) => console.debug(err));
 	});
 
 }

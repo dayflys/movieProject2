@@ -116,7 +116,7 @@
 			<div class="container-fluid d-flex flex-row" style="color:#265ff0; overflow:scroll; max-width:100vw; height:80vh;">
 				<c:forEach var="i" begin="0" end="9" >
 					<form action="/comment/select" method="get" style=" color: #869fd9;">
-						<input type="image" class="mt-3 mx-3 img" id="movieImg" src="${select[i].getImgUrl()}" style=" max-width: 20vw;height:60vh" >
+						<input type="image" class="mt-3 mx-3 img" id="movieImg" src="${select[i].getImgUrl().replaceAll("mit110","mit500")}" style=" max-width: 20vw;height:60vh" >
 						<input type="hidden" name="id" value="${i}" >
 						<input type="hidden" name="curMovie" value="select" >
 						<input type="hidden" name="moviename" value="${select[i].getMovieNM()}" >

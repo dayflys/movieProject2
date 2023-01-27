@@ -82,7 +82,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="3vw" fill="white" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
 					  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
 					</svg>
-					  
+
 			    </button>
 			    
 			    <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -114,7 +114,7 @@
 			      	<%} else{%>
 			      		<div class="subindex_purplebox mt-3">
 						<div class="profile_area">
-							<img src="https://phinf.pstatic.net/contact/20191003_136/1570029116351cmgSW_GIF/200.gif?type=s160" width="84" height="84" alt="프로필 이미지">
+							<img src="/resources/profile.png"  width="84" height="84" alt="프로필 이미지">
 								<div class="profile">
 									<p class="userid"><%=member.getNickname() %></p>
 									<p class="useremail"><%=member.getEmail() %></p>
@@ -126,6 +126,10 @@
 			      			<button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">로그아웃</button>
 			      		</form>
 			      		<button class="w-100 btn btn-lg btn-secondary mt-3" onclick="deleted('<%= member.getNickname() %>')">회원 탈퇴</button>
+					  <form method="get" action="/dib/select">
+						  <input type="hidden" name="nickname" value="<%=member.getNickname()%>">
+						  <button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">회원 정보</button>
+					  </form>
 			      	<%} %>
 			      </div>
 			      <div class="offcanvas-body">
