@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class CommentVO {
     private String nickname;
-    private Date prehour;
+    private String prehour;
     private String cont;
     private String moviename;
     private Integer like_no;
@@ -15,10 +15,10 @@ public class CommentVO {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-    public Date getPrehour() {
+    public String getPrehour() {
         return prehour;
     }
-    public void setPrehour(Date prehour) {
+    public void setPrehour(String prehour) {
         this.prehour = prehour;
     }
     public String getContent() {

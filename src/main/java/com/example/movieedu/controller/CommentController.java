@@ -27,7 +27,6 @@ public class CommentController {
         else{
             mav.addObject("msg", "해당 영화의 댓글 없음");
         }
-        System.out.println("id:" + id);
 
         mav.addObject("movieId", id);
         mav.setViewName("detail");
@@ -37,6 +36,9 @@ public class CommentController {
     @PostMapping("/insert")
     public ModelAndView insert(CommentVO vo, String id) throws UnsupportedEncodingException {
         System.out.println("comment/insert 접속 성공");
+        System.out.println("insert 시간"+vo.getPrehour());
+        System.out.println("insert 시간"+vo.getPrehour().toString());
+
         boolean result = dao.insertM(vo);
         ModelAndView mav = new ModelAndView();
         if (result){

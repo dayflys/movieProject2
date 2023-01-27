@@ -6,7 +6,7 @@
 
 <mapper namespace="resource.CommentMapper">
     <select id="selectComment" resultType="com.example.movieedu.model.vo.CommentVO">
-        SELECT * FROM COMM WHERE moviename = #{movieNm} order by prehour
+        SELECT nickname, prehour, cont, moviename, like_no, cnt FROM COMM WHERE moviename = #{movieNm} order by cnt
     </select>
 
     <insert id="insertComment"  parameterType="com.example.movieedu.model.vo.CommentVO">

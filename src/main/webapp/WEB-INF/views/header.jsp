@@ -126,6 +126,10 @@
 						<button class="w-100 btn btn-lg btn-secondary mt-3" type="submit">로그아웃</button>
 					</form>
 					<button class="w-100 btn btn-lg btn-secondary mt-3" onclick="deleted('<%= member.getNickname() %>')">회원 탈퇴</button>
+					<form method="get" action = "/dib/select">
+						<button class="w-100 btn btn-lg btn-secondary mt-3" >회원 정보</button>
+						<input type = "hidden" name = "nickname" value ="${sessionScope.user.nickname}">
+					</form>
 					<%} %>
 				</div>
 				<div class="offcanvas-body">

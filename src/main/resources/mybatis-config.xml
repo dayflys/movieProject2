@@ -6,7 +6,8 @@
   <settings>
        <setting name="jdbcTypeForNull" value="NULL" />
        <setting name="logImpl" value="LOG4J2"/>
-  </settings>  
+  </settings>
+
 </configuration>
 
 

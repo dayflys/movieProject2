@@ -53,7 +53,12 @@
 <body   class="bg color " style=" width: 100vw; height: 100vh;">
 
 	<jsp:include page="header.jsp"></jsp:include>
-	
+
+		<c:if test="${ !empty msg }" >
+			<script>
+				alert('${ msg }');
+			</script>
+		</c:if>
 		<div class="container bg-white mx-auto mt-3" style="width:80vw; height:auto; color:black; border-radius:30px; padding-bottom:15px;">
 			<br>
 			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">"${sessionScope.movielist[movieId].movieNM}"</h1>
@@ -63,8 +68,10 @@
 				<button class="btn text-white col-2" type="submit" id="save" style="float:right;
 				border:0.1px solid black;background-color:#0c3869;" <c:if test="${sessionScope.user == null}"> disabled </c:if>>영화 찜하기</button>
 				<input type="hidden" name="moviename" value="${sessionScope.movielist[movieId].movieNM}">
-				<input type="hidden" name="imgurl" value="${sessionScope.movielist[movieId].imgUrl}">
+				<input type="hidden" name="imgUrl" value="${sessionScope.movielist[movieId].imgUrl}">
 				<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
+				<input type="hidden" name="dibtime" value="<fmt:formatDate value="${now}"  pattern="yyyy-MM-dd HH:mm"/>">
+				<input type="hidden" name="id" value="${movieId}">
 			</form>
 
 			<hr style="color:black;">
@@ -75,17 +82,19 @@
 			<p><span class = "content">영화 감독 :</span> "${sessionScope.movielist[movieId].director}" </p>
 			<p><span class = "content">영화 배우 :</span> "${sessionScope.movielist[movieId].actor}"</p>
 
-
-
+			<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm" var = "comtime"/>
+			<p><c:out value="${now}"/></p>
+			<p><c:out value="${comtime}"/></p>
 
 			<hr style="color:black;">
 			<form action = "/comment/insert" method = "post">
 				<div class="input-group mb-3 mx-auto floating-right row">
 					<input type="hidden" name="moviename" value="${sessionScope.movielist[movieId].movieNM}">
 					<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
-					<input type="hidden" name="prehour" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>" >
+					<%--<c:set var="now" value="<%= new java.util.Date() %>" />--%>
+
+					<input type="hidden" name="prehour" value="<fmt:formatDate value="${now}"  pattern="yyyy-MM-dd HH:mm"/>" >
 					<input type="hidden" name="id" value="${movieId}">
-					<%--<input type="hidden" name="id" value="<%= id%>">--%>
 					<c:if test="${sessionScope.user != null}">
 					<input type="text" name="content" class="form-control col-10" placeholder="댓글을 작성해주세요" aria-describedby="button-addon2">
 					<button class="btn col-2" type="submit" id="button-addon2" style="border:0.1px solid black;background-color:#D0D0D0;" <%--<%if (nick.equals("")){ %>disabled <%} %>--%> >게시</button>

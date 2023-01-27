@@ -8,7 +8,7 @@ public class DibVO {
     int cnt;
     String nickname;
     String imgurl;
-    Date dibtime;
+    String dibtime;
     public String getNickname() {
         return nickname;
     }
@@ -32,11 +32,11 @@ public class DibVO {
         this.imgurl = imgUrl;
     }
 
-    public Date getDibtime() {
+    public String getDibtime() {
         return dibtime;
     }
 
-    public void setDibtime(Date dibtime) {
+    public void setDibtime(String dibtime) {
         this.dibtime = dibtime;
     }
 

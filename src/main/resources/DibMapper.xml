@@ -5,9 +5,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="resource.DibMapper">
-    <!--<select id="selectComment" resultType="com.example.movieedu.model.vo.CommentVO">
-        SELECT * FROM COMM WHERE moviename = #{movieNm} order by prehour
-    </select>-->
+    <select id="selectDib" resultType="com.example.movieedu.model.vo.DibVO">
+        SELECT * FROM dib WHERE nickname = #{nickname} order by cnt
+    </select>
 
     <insert id="insertDib"  parameterType="com.example.movieedu.model.vo.DibVO">
         <selectKey resultType="int" keyProperty="cnt" order="BEFORE">
@@ -22,12 +22,10 @@
 
     <update id="like" parameterType="com.example.movieedu.model.vo.CommentVO"><![CDATA[
         update comm set like_no = #{like} where cnt = #{cnt}
-    ]]></update>
+    ]]></update> -->
 
-    <delete id = "deleteComment" parameterType="_int">
-        delete from comm where cnt = #{cnt}
+    <delete id = "deleteDib" parameterType="_int">
+        delete from dib where cnt = #{cnt}
     </delete>
--->
-
 
 </mapper>
