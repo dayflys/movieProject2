@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="resource.DibMapper">
+    <select id="selectOneDib" resultType="model.vo.DibVO" >
+        SELECT * FROM dib WHERE nickname = #{nickname} and imgurl = #{imgurl}
+    </select>
+
+    <select id="selectDib" resultType="model.vo.DibVO">
+        SELECT * FROM dib WHERE nickname = #{nickname} order by cnt
+    </select>
+
+    <insert id="insertDib"  parameterType="model.vo.DibVO">
+        INSERT INTO dib(nickname,imgurl,dibtime) values ( #{nickname}, #{imgurl}, now())
+    </insert>
+
+    <!-- <update id="updateComment" parameterType="com.example.movieedu.model.vo.CommentVO">
+         update comm set cont = #{content}, preHour = #{prehour} where cnt = #{cnt}
+     </update>
+
+     <update id="like" parameterType="com.example.movieedu.model.vo.CommentVO"><![CDATA[
+         update comm set like_no = #{like} where cnt = #{cnt}
+     ]]></update> -->
+
+    <delete id = "deleteDib" parameterType="_int">
+        delete from dib where cnt = #{cnt}
+    </delete>
+
+</mapper>

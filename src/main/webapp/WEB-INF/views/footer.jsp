@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="myCss.css" />
+<link rel="stylesheet" href="/resources/myCss.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 </head>
 <body>
-	<footer class="container-fluid  text-center py-3 mt-5" style="background: linear-gradient(#0f1b29, black 70%);">
+	<footer class="container-fluid  text-center py-3 mt-5" style="background: linear-gradient(#0f1b29,#000000 70%);">
 		<p class="fw-bold"> (주) One Trillion (OT)</p>
 		<p class="fst-normal text-white-50">
 			대표이사  1조<br>

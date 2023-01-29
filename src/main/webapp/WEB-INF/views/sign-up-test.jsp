@@ -20,29 +20,29 @@
                 </a>
             </div>
             
-            <form action = "register" method = "post" id="signupForm" name="signupForm">
+            <form action = "/member/register" method = "post" id="signupForm" name="signupForm">
             	<div class="form-floating mt-4">
 					 <input type="text" class="form-control" id="nickname" name="nickname" placeholder="holdid" required>
-					 <label for="id">닉네임</label>
+					 <label for="nickname">닉네임</label>
 						 <div class="valid-feedback">사용가능</div>
 						 <div class="invalid-feedback">4자리 이상 입력하세요.</div>
 				</div>	
                 <div class="form-floating mt-4">
 					 <input type="text" class="form-control" id="id1" name="id" placeholder="holdid" required>
-					 <label for="id">아이디</label>
+					 <label for="id1">아이디</label>
 						 <div class="valid-feedback">사용가능</div>
 						 <div class="invalid-feedback">4자리 이상 입력하세요.</div>
 				</div>		
 							
 				<div class="form-floating mt-4">
 					<input type="password" class="form-control" id="pwd1" name="pwd" placeholder="holdpwd" required>
-					<label for="pwd">비밀번호</label>
+					<label for="pwd1">비밀번호</label>
 						<div class="valid-feedback">사용가능</div>
 						<div class="invalid-feedback">4자리 이상 입력하세요.</div>
 				</div>
 				
 				<div class="form-floating mt-4">
-					<input type="password" class="form-control" id="repwd" name="repwd" placeholder="holdrepwd" required>
+					<input type="password" class="form-control" id="repwd"  placeholder="holdrepwd" required>
 					<label for="repwd">비밀번호 재확인</label>
 						<div class="valid-feedback">일치합니다.</div>
 						<div class="invalid-feedback">일치하지 않습니다.</div>
@@ -62,7 +62,7 @@
 			    </div>
 			               
                 <div class="form-group">
-               		<label for="email1" class="form-label mt-4">Email</label>
+               		<label for="email" class="form-label mt-4">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required>
 						<div class="invalid-feedback">유효하지 않은 이메일 입니다.</div>
                 </div>
