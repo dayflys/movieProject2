@@ -12,6 +12,9 @@
 	<delete id="Delete"  parameterType="string" >
 		delete a,b from member a left JOIN comm b on a.nickname = b.nickname  where a.nickname = #{nickname}
 	</delete>
+	<delete id="DeleteSecond" parameterType="string">
+		delete from dib where nickname = #{nickname}
+	</delete>
 </mapper>
 
 

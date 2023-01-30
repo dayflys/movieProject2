@@ -1,7 +1,6 @@
 package com.example.movieedu;
 
 import model.dao.memberDAO;
-import model.vo.MovieVO;
 import model.vo.memberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class MemberController {
@@ -40,7 +38,8 @@ public class MemberController {
     @ResponseBody
     public String MemberDelete(String nickname,HttpSession s){
         boolean result = dao.delete(nickname);
-        System.out.println();
+        System.out.println(1);
+        System.out.println(result);
         String jsonStr;
         if (result) {
             s.removeAttribute("user");

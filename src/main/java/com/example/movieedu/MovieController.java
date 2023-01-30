@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 import service.MovieService;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @SessionAttributes(value = {"select","subject"})
@@ -33,7 +35,11 @@ public class MovieController {
 
     @GetMapping("/movie/country")
     public String country(@ModelAttribute("select") ArrayList<MovieVO> results,@ModelAttribute("subject")ArrayList<String> sub,String subject,int num) {
-        List<MovieVO> countries = ms.country("test", num);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+        Calendar d = Calendar.getInstance();
+        d.add(Calendar.DATE, -1);
+        String dailydate = sdf.format(d.getTime());
+        List<MovieVO> countries = ms.country(dailydate, num);
         if(results.size() != 0) {
             results.clear();
         }
@@ -64,7 +70,11 @@ public class MovieController {
 
     @GetMapping("/movie/ganre")
     public String ganre(@ModelAttribute("select") ArrayList<MovieVO> results,@ModelAttribute("subject")ArrayList<String> sub,String subject,int num) {
-        List<MovieVO> ganres = ms.ganre("test", num);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+        Calendar d = Calendar.getInstance();
+        d.add(Calendar.DATE, -1);
+        String dailydate = sdf.format(d.getTime());
+        List<MovieVO> ganres = ms.ganre(dailydate, num);
         if(results.size() != 0) {
             results.clear();
         }
