@@ -5,11 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
-
 @Repository
 public class memberDAO{
 	@Autowired
@@ -30,8 +25,16 @@ public class memberDAO{
 	}
 
 	public boolean delete(String nick){
+		System.out.println(nick);
 		String statement = "Member.Delete";
 		int num = session.delete(statement, nick);
-		return num >= 1;
+		System.out.println(num);
+		statement = "Member.DeleteSecond";
+		int num2 = session.delete(statement,nick);
+		System.out.println(num2);
+		if(num2 != -1){
+			return num >= 1;
+		}
+		return false;
 	}
 }

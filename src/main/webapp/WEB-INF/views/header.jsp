@@ -151,12 +151,12 @@ function deleted(nick) {
 		let query = "nickname="+nick;	
 		var xhr = new XMLHttpRequest();
 		xhr.onload = function () {
-			if(xhr.status == 200) {				
+			if(xhr.status === 200) {
 				let jsondom = JSON.parse(xhr.responseText);
 				console.log(jsondom)
 				if (jsondom.result === true){
 					window.alert("회원탈퇴가 완료되었습니다.");
-					location.href='http://localhost:8080/login';
+					location.replace('http://localhost:8080/login');
 				}
 				else
 					window.alert("회원탈퇴에 실패했습니다.");

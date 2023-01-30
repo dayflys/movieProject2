@@ -14,7 +14,6 @@ public class MovieService {
 
     public List<MovieVO> country(String date, int num){
         String query = "";
-        date = "20230124";
         List<MovieVO> countries = new ArrayList<MovieVO>();
         if(num == 1) {
             query = date + "&repNationCd=F"; // 외국 영화
@@ -25,7 +24,6 @@ public class MovieService {
     }
     public List<MovieVO> ganre(String date, int num){
         String query = "";
-        date = "20230123";
         List<MovieVO> countries = new ArrayList<MovieVO>();
         if(num == 1) {
             query = date + "&multiMovieYn=Y"; // 다양성 영화
