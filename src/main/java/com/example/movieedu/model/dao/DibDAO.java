@@ -21,7 +21,15 @@ public class DibDAO {
         System.out.println("Dib-list:" + diblist);
         return diblist;
     }
-
+    public List<DibVO> searchOne(String nickname,String ImgUrl){
+        String statement = "resource.DibMapper.selectOneDib";
+        DibVO vo = new DibVO();
+        vo.setImgUrl(ImgUrl);
+        vo.setNickname(nickname);
+        List<DibVO> diblist = session.selectList(statement, vo);
+        System.out.println("Dib-list:" + diblist);
+        return diblist;
+    }
     public boolean insertM(DibVO vo) {
         boolean result = true;
 

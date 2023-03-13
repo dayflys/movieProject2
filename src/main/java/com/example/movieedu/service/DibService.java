@@ -1,5 +1,24 @@
 package com.example.movieedu.service;
 
+import com.example.movieedu.model.dao.DibDAO;
+import com.example.movieedu.model.vo.DibVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class DibService {
-    //찜목록 중복 방지용 메서드
+    @Autowired
+    private DibDAO dao;
+
+    public boolean Check(String nickname,String ImgUrl){
+        System.out.println(nickname);
+        List<DibVO> list = dao.searchOne(nickname,ImgUrl);
+        System.out.println(list);
+        if(list.size() != 0)
+            return false;
+        else
+            return true;
+    }
 }

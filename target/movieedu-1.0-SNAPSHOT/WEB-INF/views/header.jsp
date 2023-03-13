@@ -114,7 +114,7 @@
 					<%} else{%>
 					<div class="subindex_purplebox mt-3">
 						<div class="profile_area">
-							<img src="https://phinf.pstatic.net/contact/20191003_136/1570029116351cmgSW_GIF/200.gif?type=s160" width="84" height="84" alt="프로필 이미지">
+							<img src="/resources/static/profile.png" width="84" height="84" alt="프로필 이미지">
 							<div class="profile">
 								<p class="userid"><%=member.getNickname() %></p>
 								<p class="useremail"><%=member.getEmail() %></p>

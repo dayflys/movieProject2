@@ -61,9 +61,9 @@
 		</c:if>
 		<div class="container bg-white mx-auto mt-3" style="width:80vw; height:auto; color:black; border-radius:30px; padding-bottom:15px;">
 			<br>
-			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">"${sessionScope.movielist[movieId].movieNM}"</h1>
+			<h1 class = "text-center" style = "text-shadow: 2px 2px 2px gray; ">"${sessionScope.get("movieList")[movieId].getMovieNM()}"</h1>
 			<hr style="color:black;">
-			<img class="mt-3 img " src="${sessionScope.movielist[movieId].imgUrl.replaceAll("mit110", "mit500")}"style="width:400px;height:600px;">
+			<img class="mt-3 img " src="${sessionScope.get("movieList")[movieId].getImgUrl().replaceAll("mit110", "mit500")}"style="width:400px;height:600px;">
 			<form action = "/dib/insert" method = "post">
 				<button class="btn text-white col-2" type="submit" id="save" style="float:right;
 				border:0.1px solid black;background-color:#0c3869;" <c:if test="${sessionScope.user == null}"> disabled </c:if>>영화 찜하기</button>
@@ -72,15 +72,16 @@
 				<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
 				<input type="hidden" name="dibtime" value="<fmt:formatDate value="${now}"  pattern="yyyy-MM-dd HH:mm"/>">
 				<input type="hidden" name="id" value="${movieId}">
+				<input type="hidden" name="curMovie" value="${sessionScope.curMovie}" >
 			</form>
 
 			<hr style="color:black;">
-			<p><span class = "content">부제 :</span> "${sessionScope.movielist[movieId].subtitle}"  </p>
-			<p><span class = "content">박스 오피스 순위 :</span> "${sessionScope.movielist[movieId].rank}"위 </p>
-			<p><span class = "content">관객 평점:</span> "${sessionScope.movielist[movieId].userRating}" 점</p>
-			<p><span class = "content">개봉 년도 :</span> "${sessionScope.movielist[movieId].pubDate}" </p>
-			<p><span class = "content">영화 감독 :</span> "${sessionScope.movielist[movieId].director}" </p>
-			<p><span class = "content">영화 배우 :</span> "${sessionScope.movielist[movieId].actor}"</p>
+			<p><span class = "content">부제 :</span> "${sessionScope.get("movieList")[movieId].getSubtitle()}"  </p>
+			<p><span class = "content">박스 오피스 순위 :</span> "${sessionScope.get("movieList")[movieId].getRank()}"위 </p>
+			<p><span class = "content">관객 평점:</span> "${sessionScope.get("movieList")[movieId].getUserRating()}" 점</p>
+			<p><span class = "content">개봉 년도 :</span> "${sessionScope.get("movieList")[movieId].getPubDate()}" </p>
+			<p><span class = "content">영화 감독 :</span> "${sessionScope.get("movieList")[movieId].getDirector()}" </p>
+			<p><span class = "content">영화 배우 :</span> "${sessionScope.get("movieList")[movieId].getActor()}"</p>
 
 			<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm" var = "comtime"/>
 			<p><c:out value="${now}"/></p>
@@ -89,12 +90,13 @@
 			<hr style="color:black;">
 			<form action = "/comment/insert" method = "post">
 				<div class="input-group mb-3 mx-auto floating-right row">
-					<input type="hidden" name="moviename" value="${sessionScope.movielist[movieId].movieNM}">
+					<input type="hidden" name="moviename" value="${sessionScope.get("movieList")[movieId].getMovieNM()}">
 					<input type="hidden" name="nickname" value="${sessionScope.user.nickname}">
 					<%--<c:set var="now" value="<%= new java.util.Date() %>" />--%>
 
 					<input type="hidden" name="prehour" value="<fmt:formatDate value="${now}"  pattern="yyyy-MM-dd HH:mm"/>" >
 					<input type="hidden" name="id" value="${movieId}">
+					<input type="hidden" name="curMovie" value="${sessionScope.curMovie}" >
 					<c:if test="${sessionScope.user != null}">
 					<input type="text" name="content" class="form-control col-10" placeholder="댓글을 작성해주세요" aria-describedby="button-addon2">
 					<button class="btn col-2" type="submit" id="button-addon2" style="border:0.1px solid black;background-color:#D0D0D0;" <%--<%if (nick.equals("")){ %>disabled <%} %>--%> >게시</button>
@@ -132,6 +134,7 @@
 									<input type = "hidden" name = "cnt" value = "${vo.cnt}">
 									<input type = "hidden" name = "moviename" value="${vo.moviename}">
 									<input type="hidden" name="id" value="${movieId}">
+									<input type="hidden" name="curMovie" value="${sessionScope.get("curMovie")}" >
 								</form>
 								<form action="/comment/like" method="post">
 									<input type="image"  class="mx-1 border rounded" style="width:20px; height:20px;" src="/resources/static/dash-square.svg">
@@ -139,6 +142,7 @@
 									<input type = "hidden" name = "cnt" value = "${vo.cnt}">
 									<input type = "hidden" name = "moviename" value="${vo.moviename}">
 									<input type="hidden" name="id" value="${movieId}">
+									<input type="hidden" name="curMovie" value="${sessionScope.curMovie}" >
 								</form>
 
 								</c:if>
@@ -167,6 +171,7 @@
 								<input type = "hidden" name = "cnt" value = "${vo.cnt}">
 								<input type="hidden" name="moviename" value="${vo.moviename}" >
 								<input type="hidden" name="id" value="${movieId}">
+								<input type="hidden" name="curMovie" value="${sessionScope.curMovie}" >
 							</form>
 						</c:if>
 						</td>
@@ -197,7 +202,7 @@
 					<input type="hidden" id="edit-comment-id" value = "${movieId}">
 					<input type="hidden" id="edit-comment-prehour" value = "<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm"/>">
 					<input type="hidden" id="edit-comment-cnt" value = "1">
-					<input type="hidden" id="edit-comment-movie" value = "${sessionScope.movielist[movieId].movieNM}">
+					<input type="hidden" id="edit-comment-movie" value = "${sessionScope.get("movieList")[movieId].getMovieNM()}">
 
 					<!-- 전송 버튼 -->
 					<button type="button" class="btn btn-outline-primary btn-sm" id="comment-update-btn">수정 완료</button>

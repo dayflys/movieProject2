@@ -56,14 +56,8 @@ public class MemberController {
         MemberVO vo = new MemberVO();
         vo.setIdent(id);
         vo.setPwd(pwd);
-        System.out.println("member vo : "+ vo.getIdent());
-        System.out.println("member vo : "+ vo.getPwd());
 
         MemberVO user = dao.login(vo);
-
-        System.out.println("member vo : "+ user);
-/*        System.out.println("member vo : "+ user.getId());
-        System.out.println("member vo : "+ user.getNickname());*/
         ModelAndView mav = new ModelAndView();
         if(user != null) {
             s.setAttribute("user", user);

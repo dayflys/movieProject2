@@ -17,7 +17,7 @@
 <h1>Hello 회원 정보</h1>
 <div class = "container" >
 
-    <a href="http://localhost:8088/log">메인페이지로</a>
+    <a href="http://localhost:8088/login">메인페이지로</a>
     <%--찜 목록 나열--%>
     <c:forEach var="dib" items = "${diblist}" begin="0" end="${diblist.size()}" >
         <img src = "${dib.imgUrl}" alt = ""/>
